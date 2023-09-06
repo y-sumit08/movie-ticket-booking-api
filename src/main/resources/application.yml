@@ -4,10 +4,13 @@ jwt:
             InHours: 10
 spring:
     datasource:
-        #url: jdbc:mysql://localhost:3306/bookmyshow?useSSL=false
-        url: jdbc:mysql://${DB_HOST}/${DB_NAME}?useSSL=false
-        username: ${DB_USERNAME}
-        password: ${DB_PASSWORD}
+        url: jdbc:mysql://localhost:3306/bookmyshow?useSSL=false
+        username: root
+        password: root
+        #comment the above three properties and uncomment the below ones when deploying to K8s
+        #url: jdbc:mysql://${DB_HOST}/${DB_NAME}?useSSL=false
+        #username: ${DB_USERNAME}
+        #password: ${DB_PASSWORD}
     jackson:
         serialization:
             fail-on-empty-beans: false
