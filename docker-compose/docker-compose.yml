@@ -1,0 +1,72 @@
+version: '3.8'
+services:
+  postgres:
+    image: debezium/example-postgres:1.9
+    container_name: postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=exampledb
+
+  mysql:
+    image: mysql:latest
+    cap_add:
+      - SYS_NICE
+    restart: always
+    environment:
+      - MYSQL_DATABASE=quotes
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=mysql
+      - MYSQL_PASSWORD=p@ssword
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./mysql_data/init.sql:/docker-entrypoint-initdb.d/init.sql
+volumes:
+  mysql_data:
+    driver: local
+
+#  oracle:
+#    image: gvenzl/oracle-xe:21
+#    ports:
+#      - 5500:5500
+#      - 1521:1521
+#    environment:
+#       - WEB_CONSOLE=false
+#       - ORACLE_PASSWORD=oracle
+#    volumes:
+#      - ./config/oracle-init.sql:/docker-entrypoint-initdb.d/oracle-init.sql
+#
+#  mongo:
+#    image: mongo:4.2.14
+#    ports:
+#       - 27017:27017
+#    command: mongod --replSet rs0
+#    environment:
+#       - MONGO_INITDB_ROOT_USERNAME=mongo
+#       - MONGO_INITDB_ROOT_PASSWORD=mongo
+#    networks:
+#       - test
+
+#mysql-service:
+#  image: debezium/example-mysql:1.0
+#  restart: on-failure
+#  ports:
+#    - 3306:3306
+#  environment:
+#    - MYSQL_ROOT_PASSWORD=debezium
+#    - MYSQL_USER=mysqluser
+#    - MYSQL_USER=mysqlpwd
+#  networks:
+#    - test
+
+  #app:
+   # image: 'cdc-test-example-springboot:latest'
+  #  build:
+  #    context: .
+  #  container_name: app
+  #  depends_on:
+  #    - kconnect
